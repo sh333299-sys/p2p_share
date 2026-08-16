@@ -9,7 +9,7 @@ export default function App() {
         <h1>P2P Share</h1>
         <p className="muted">Direct device-to-device file transfer. No internet required.</p>
       </header>
-
+    
       {!role && (
         <div className="role-picker">
           <button onClick={() => setRole("send")}>Send a file</button>
