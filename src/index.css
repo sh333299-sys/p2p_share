@@ -603,3 +603,49 @@ body {
   justify-content: flex-end;
   margin-top: 20px;
 }
+
+/* 4-Digit Classroom Code Styling */
+.text-center {
+  text-align: center;
+}
+
+.classroom-code-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.code-digit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 64px;
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--accent-blue);
+  color: #60a5fa;
+  font-size: 32px;
+  font-weight: 800;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  letter-spacing: normal;
+}
+
+.code-input {
+  text-align: center;
+  font-size: 28px;
+  letter-spacing: 12px;
+  font-weight: 700;
+  padding: 12px;
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  color: #60a5fa;
+}
+
+.code-input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
