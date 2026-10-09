@@ -5,9 +5,8 @@ const CHUNK_SIZE = 64 * 1024; // 64 KB per chunk (optimal for RTCDataChannel)
 const BUFFER_THRESHOLD = 1024 * 1024; // 1 MB backpressure threshold
 
 const rtcConfig = {
-  iceServers: [
-    { urls: "stun:stun.l.google.com:19302" }
-  ]
+  // Empty iceServers prevents hanging on Google STUN when offline on a mobile hotspot
+  iceServers: []
 };
 
 export function createPeerConnection() {
@@ -133,11 +132,11 @@ export function listenForDataChannel(peer, callbacks = {}) {
   };
 }
 
-// SENDER: Creates offer & waits for ICE candidates (with 2.5s safe timeout for offline environments)
+// SENDER: Creates offer & waits for ICE candidates (fast local gathering)
 export async function createOffer(peer) {
   const offer = await peer.createOffer();
   await peer.setLocalDescription(offer);
-  await waitForIceGathering(peer, 2500);
+  await waitForIceGathering(peer, 600);
   return peer.localDescription;
 }
 
@@ -146,7 +145,7 @@ export async function createAnswer(peer, offerSdp) {
   await peer.setRemoteDescription(offerSdp);
   const answer = await peer.createAnswer();
   await peer.setLocalDescription(answer);
-  await waitForIceGathering(peer, 2500);
+  await waitForIceGathering(peer, 600);
   return peer.localDescription;
 }
 
@@ -156,7 +155,7 @@ export async function acceptAnswer(peer, answerSdp) {
 }
 
 // Helper: Waits for ICE gathering with timeout so offline Wi-Fi doesn't hang
-function waitForIceGathering(peer, timeoutMs = 2500) {
+function waitForIceGathering(peer, timeoutMs = 600) {
   return new Promise((resolve) => {
     if (peer.iceGatheringState === "complete") {
       return resolve();
